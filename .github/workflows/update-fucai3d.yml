@@ -5,6 +5,9 @@ on:
     - cron: "55 14 * * *"   # 北京时间 22:55 (UTC 14:55)
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
