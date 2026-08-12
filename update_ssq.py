@@ -22,7 +22,7 @@ def parse_huiniao(data):
         if len([r for r in reds if r.strip()]) != 6:
             continue
         code = str(x.get("code", ""))
-        if not re.match(r"^20\d{4}$", code):
+        if not re.match(r"^20\d{5}$", code):
             continue
         blue = str(x.get("seven", ""))
         if not blue.isdigit():
@@ -35,7 +35,7 @@ def parse_cwl(data):
     out = []
     for x in (data.get("result") or []):
         code = str(x.get("code", ""))
-        if not re.match(r"^20\d{4}$", code):
+        if not re.match(r"^20\d{5}$", code):
             continue
         reds = str(x.get("red", "")).split(",")
         if len([r for r in reds if r.strip()]) != 6:
