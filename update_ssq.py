@@ -56,7 +56,13 @@ def main():
     existing = {d["code"]: d for d in cur.get("draws", [])}
     sources, fetched = [], []
     try:
-        fetched = parse_huiniao(http_get(HUI_NIAO))
+        req = urllib.request.Request(HUI_NIAO, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            raw = r.read().decode("utf-8", "replace")
+        print("HUINIAO_HTTP", getattr(r, "status", "?"), "LEN", len(raw))
+        print("HUINIAO_RAW", raw[:600])
+        data = json.loads(raw)
+        fetched = parse_huiniao(data)
         if fetched:
             sources.append("huiniao.top")
     except Exception as e:
