@@ -26,5 +26,8 @@ jobs:
           git diff --cached --quiet || git commit -m "auto: 更新双色球开奖 $(date +%F)"
           git push
 
-      - name: 刷新 jsDelivr CDN 缓存
-        run: curl -s "https://purge.jsdelivr.net/gh/${{ github.repository }}/ssq.json" || true
+      - name: 刷新 jsDelivr CDN 缓存（gcore 节点国内友好）
+        run: |
+          curl -s "https://purge.jsdelivr.net/gh/${{ github.repository }}/ssq.json" || true
+          # 主动预热 gcore 边缘节点到最新版本，确保国内用户打开即最新
+          curl -s "https://gcore.jsdelivr.net/gh/${{ github.repository }}/ssq.json" -o /dev/null || true
